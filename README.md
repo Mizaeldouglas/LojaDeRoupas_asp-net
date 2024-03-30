@@ -8,6 +8,11 @@ Projeto de uma API REST completa para gerenciamento de uma loja de roupas, inclu
 - **Funcionários:** CRUD completo, gerenciamento de permissões, cargos e departamentos.
 
 
+## Screenshots
+
+![App Screenshot](https://lh3.googleusercontent.com/pw/AP1GczPUa2LnalxekWpYGH4BZUhd-aFhha5HxlJGbcrUsPhG_E0bD8u00tMYO1C0It7SYFO8NyQdKYV_Kk7NIf_MspCrQxWQdscIXjEadQxA7GDiHIthw52F0Plrhk2HYt8FmSf_bW9UQ3TO11JtaEpmaZoQWg=w1685-h951-s-no?authuser=0)
+
+
 ## Stack utilizada
 
 - **C# .NET 7.0:** Linguagem de programação moderna e robusta.
@@ -22,32 +27,21 @@ Projeto de uma API REST completa para gerenciamento de uma loja de roupas, inclu
 
 ## Exemplo de Estrutura da API
 
-```c#
-    /Clothing
+```javascript
+/api/
+    /Roupas
         /Get
         /GetById/{id}
         /Post
         /Put/{id}
         /Delete/{id}
-    /Brand
+    /Clientes
         /Get
         /GetById/{id}
         /Post
         /Put/{id}
         /Delete/{id}
-    /Color
-        /Get
-        /GetById/{id}
-        /Post
-        /Put/{id}
-        /Delete/{id}
-    /Clients
-        /Get
-        /GetById/{id}
-        /Post
-        /Put/{id}
-        /Delete/{id}
-    /Employees
+    /Funcionarios
         /Get
         /GetById/{id}
         /Post
