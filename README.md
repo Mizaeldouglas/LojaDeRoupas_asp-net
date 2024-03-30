@@ -24,24 +24,24 @@ Projeto de uma API REST completa para gerenciamento de uma loja de roupas, inclu
 
 ```javascript
 /api/
-    /Roupas
-        /Get
-        /GetById/{id}
-        /Post
-        /Put/{id}
-        /Delete/{id}
-    /Clientes
-        /Get
-        /GetById/{id}
-        /Post
-        /Put/{id}
-        /Delete/{id}
-    /Funcionarios
-        /Get
-        /GetById/{id}
-        /Post
-        /Put/{id}
-        /Delete/{id}
+/Roupas
+/Get
+/GetById/{id}
+/Post
+/Put/{id}
+/Delete/{id}
+/Clientes
+/Get
+/GetById/{id}
+/Post
+/Put/{id}
+/Delete/{id}
+/Funcionarios
+/Get
+/GetById/{id}
+/Post
+/Put/{id}
+/Delete/{id}
 ```
 
 
@@ -89,11 +89,24 @@ sudo apt-get install dotnet-sdk-7.0
 - O comando brew só está disponível no macOS.
 - Os comandos para Linux podem variar dependendo da sua distro.
 
-
 ### Clonar o repositorio
 ```bash
 git clone hhttps://github.com/Mizaeldouglas/LojaDeRoupas_asp-net.git
+cd LojaDeRoupas_asp-net
 ```
+
+### Instalação do Entity Framework Core via NuGet:
+
+Adicione a seguinte seção após a etapa de clonar o repositório:
+
+- Instalar o Entity Framework
+```bash
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+```
+- Observação: Se você instalou o EF Core globalmente (```dotnet tool install --global dotnet-ef```),poderá usar comandos do EF Core diretamente na linha de comando.
+
+
 ### Iniciar o projeto na sua maquina
 
 ```bash
@@ -101,3 +114,4 @@ git clone hhttps://github.com/Mizaeldouglas/LojaDeRoupas_asp-net.git
   dotnet build
   dotnet run
 ```
+
