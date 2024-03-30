@@ -22,26 +22,26 @@ Projeto de uma API REST completa para gerenciamento de uma loja de roupas, inclu
 
 ## Exemplo de Estrutura da API
 
-```javascript
+```c#
 /api/
-/Roupas
-/Get
-/GetById/{id}
-/Post
-/Put/{id}
-/Delete/{id}
-/Clientes
-/Get
-/GetById/{id}
-/Post
-/Put/{id}
-/Delete/{id}
-/Funcionarios
-/Get
-/GetById/{id}
-/Post
-/Put/{id}
-/Delete/{id}
+    /Roupas
+        /Get
+        /GetById/{id}
+        /Post
+        /Put/{id}
+        /Delete/{id}
+    /Clientes
+        /Get
+        /GetById/{id}
+        /Post
+        /Put/{id}
+        /Delete/{id}
+    /Funcionarios
+        /Get
+        /GetById/{id}
+        /Post
+        /Put/{id}
+        /Delete/{id}
 ```
 
 
