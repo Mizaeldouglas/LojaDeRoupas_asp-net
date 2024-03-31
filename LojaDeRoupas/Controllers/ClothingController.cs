@@ -6,6 +6,7 @@ using LojaDeRoupas.Data;
 using LojaDeRoupas.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LojaDeRoupas.Controllers
 {
@@ -13,7 +14,6 @@ namespace LojaDeRoupas.Controllers
     [ApiController]
     public class ClothingController : ControllerBase
     {
-
         private readonly AppDbContext _context;
 
         public ClothingController(AppDbContext context)
@@ -26,16 +26,7 @@ namespace LojaDeRoupas.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Clothing>>> Get()
         {
-            var clothings = await _context.Clothings.FindAsync();
-            try
-            {
-                return Ok(clothings);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            return await _context.Clothings.ToListAsync();
         }
 
         // GET: api/Clothing/5
@@ -44,14 +35,17 @@ namespace LojaDeRoupas.Controllers
         {
             try
             {
-                var clothings = await _context.Clothings.FindAsync(id);
+                var clothing = await _context.Clothings
+                    .Include(c => c.ClothingColors)
+                    .ThenInclude(cc => cc.Color)
+                    .FirstOrDefaultAsync(c => c.Id == id);
 
-                if (clothings == null)
+                if (clothing == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(clothings);
+                return Ok(clothing);
             }
             catch (Exception e)
             {
@@ -66,7 +60,38 @@ namespace LojaDeRoupas.Controllers
         {
             try
             {
-                var clothings = await _context.Clothings.AddAsync(clothing);
+                // Adicione as cores à peça de roupa antes de salvá-la
+                foreach (var clothingColor in clothing.ClothingColors)
+                {
+                    clothingColor.Color = await _context.Colors.FindAsync(clothingColor.ColorId);
+                }
+                
+                _context.Clothings.Add(clothing);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("Get", new { id = clothing.Id }, clothing);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+
+        // PUT: api/Clothing/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Clothing>> Put(int id, [FromBody] Clothing clothing)
+        {
+            try
+            {
+                var clothings = await _context.Clothings.FindAsync(id);
+                if (clothings == null)
+                {
+                    return NotFound("Não existe esse ID");
+                }
+
+                _context.Entry(clothings).CurrentValues.SetValues(clothing);
                 await _context.SaveChangesAsync();
                 return Ok(clothings);
             }
@@ -75,19 +100,22 @@ namespace LojaDeRoupas.Controllers
                 Console.WriteLine(e);
                 throw;
             }
-
-        }
-
-        // PUT: api/Clothing/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
         }
 
         // DELETE: api/Clothing/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<Clothing>> Delete(int id)
         {
+            var clothing = await _context.Clothings.FindAsync(id);
+            if (clothing == null)
+            {
+                return NotFound("não existe esse ID");
+            }
+
+            _context.Clothings.Remove(clothing);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }
